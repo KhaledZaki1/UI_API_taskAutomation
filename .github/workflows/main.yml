@@ -33,19 +33,19 @@ jobs:
       - name: Run Cypress tests
         run: npx cypress run
 
-      # - name: Upload Cypress Screenshots
-      #   if: failure()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: cypress-screenshots
-      #     path: cypress/screenshots
+      - name: Upload Cypress Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
 
-      # - name: Upload Cypress Snapshots Diff
-      #   if: failure()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: visual-diffs
-      #     path: cypress/snapshots_diff_output_
+      - name: Upload Cypress Snapshots Diff
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diffs
+          path: cypress/snapshots_diff_output_
 
       
       - name: Generate Coverage Report
