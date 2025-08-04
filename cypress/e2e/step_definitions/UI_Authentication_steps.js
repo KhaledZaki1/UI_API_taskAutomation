@@ -342,6 +342,6 @@ Then('The updated user for {string} should appear with the updated data in the t
         });
     });
     // taking snapshot after an existing item being updated with another data (Visual Testing)
-    cy.wait(500);
+    cy.wait(300);
     cy.matchImageSnapshot('user-updated-table');
 });
