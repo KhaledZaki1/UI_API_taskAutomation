@@ -56,7 +56,7 @@ Feature: User Management Functionality
         Examples:
             | existingUser |
             | user6        |
-
+    @logout
     Scenario: User should be able to log out from the platform
         When The user clicks on the 'logout' button
         Then The user should be redirected to the login page
