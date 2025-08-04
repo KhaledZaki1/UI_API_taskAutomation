@@ -1,0 +1,58 @@
+name: Run Cypress Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.17.1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start local server
+        run: npm run dev &
+        env:
+          PORT: 5173
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:5173
+
+      - name: Run Cypress tests
+        run: npx cypress run
+
+      - name: Upload Cypress Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Upload Cypress Snapshots Diff
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diffs
+          path: cypress/snapshots_diff_output_
+
+      
+      - name: Generate Coverage Report
+        run: npx nyc report --reporter=lcov
+
+      - name: Upload Code Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage
