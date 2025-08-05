@@ -61,6 +61,9 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
+      - name: Install Newman HTML Reporter
+        run: npm install -g newman-reporter-html
+
       - name: Run Postman API tests with Newman
         run: |
           newman run postman-api-tests/API-Booking-Tests.postman_collection.json \
