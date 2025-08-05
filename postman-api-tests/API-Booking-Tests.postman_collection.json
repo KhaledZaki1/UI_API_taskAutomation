@@ -1,0 +1,1120 @@
+{
+	"info": {
+		"_postman_id": "1befaf71-16ad-4735-99e6-c57338446093",
+		"name": "API-Booking-Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19380242",
+		"_collection_link": "https://speeding-spaceship-42648.postman.co/workspace/API-Test-Automation~ef933952-8031-46f4-8b64-cd9fed68327e/collection/19380242-1befaf71-16ad-4735-99e6-c57338446093?action=share&source=collection_link&creator=19380242"
+	},
+	"item": [
+		{
+			"name": "POST/Auth",
+			"item": [
+				{
+					"name": "Valid Login (Valid Credentials) - Positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token should be returned in the response\", () => {\r",
+									"    let j = pm.response.json();\r",
+									"    pm.expect(j).to.have.property(\"token\");\r",
+									"    pm.environment.set(\"token\", j.token);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Login (Invalid Pass) - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Login should fail with a reason of invalid password\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"    const res = pm.response.json();\r",
+									"    pm.expect(res).to.have.property(\"reason\", \"Bad credentials\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token should not return in the response\", () => {\r",
+									"    let j = pm.response.json();\r",
+									"    pm.expect(j).to.not.have.property(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password1232\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Login (Invalid Username) - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Login should fail with a reason of invalid username\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"    const res = pm.response.json();\r",
+									"    pm.expect(res).to.have.property(\"reason\", \"Bad credentials\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token should not return in the response\", () => {\r",
+									"    let j = pm.response.json();\r",
+									"    pm.expect(j).to.not.have.property(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"adminn\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Login (Empty Credentials) - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Login should fail with a reason of empty credentials\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"    const res = pm.response.json();\r",
+									"    pm.expect(res).to.have.property(\"reason\", \"Bad credentials\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token should not return in the response\", () => {\r",
+									"    let j = pm.response.json();\r",
+									"    pm.expect(j).to.not.have.property(\"token\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"\",\r\n    \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "View all Bookings IDs",
+			"item": [
+				{
+					"name": "Get all bookings IDs - Positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 200\", () => { \r",
+									"    pm.response.to.have.status(200);\r",
+									"}); \r",
+									"\r",
+									"pm.test(\"An array of bookings IDs should be returned in the response\", () => { \r",
+									"    let j = pm.response.json(); \r",
+									"    pm.expect(j).to.be.an(\"array\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/booking",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking by ID - Valid ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The response should have all required booking fields\", () => {\r",
+									"    const j= pm.response.json();\r",
+									"    pm.expect(j).to.have.property(\"firstname\");\r",
+									"    pm.expect(j).to.have.property(\"lastname\");\r",
+									"    pm.expect(j).to.have.property(\"totalprice\");\r",
+									"    pm.expect(j).to.have.property(\"depositpaid\");\r",
+									"    pm.expect(j).to.have.property(\"bookingdates\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/booking/550",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"550"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all bookings IDs by wrong endpoint - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 404 for this wrong endpoint\", () => { \r",
+									"    pm.response.to.have.status(404);\r",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/bookingg",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"bookingg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking by ID(42347653289) - Nonexisting ID (Negative)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 404 for this non-existing booking\", () => { \r",
+									"    pm.response.to.have.status(404);\r",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/booking/42347653289",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"42347653289"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create Booking",
+			"item": [
+				{
+					"name": "Create valid booking - Positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let j = pm.response.json();\r",
+									"pm.environment.set(\"booking_Id\", j.bookingid);\r",
+									"\r",
+									"pm.test(\"The response body should contain ID and booking details\", () => {\r",
+									"    const j = pm.response.json();\r",
+									"    pm.expect(j).to.have.property(\"bookingid\");\r",
+									"    pm.expect(j).to.have.property(\"booking\");\r",
+									"    // to check that lastname created is \"Automation\", to check the next request with it but for the firstname\r",
+									"    pm.expect(j.booking).to.have.property(\"lastname\", \"Automation\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"firstname\": \"Test\",\r\n\"lastname\": \"Automation\", \r\n\"totalprice\": 980, \r\n\"depositpaid\": false, \r\n\"bookingdates\": {\r\n    \"checkin\": \"2018-07-16\",\r\n    \"checkout\": \"2018-07-20\"\r\n},\r\n \"additionalneeds\": \"Fullboard\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/booking",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get booking with invalid paramter value - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 200\" ,() => {\r",
+									"pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should be an empty array when no bookings match\", () => {\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/booking?firstname=Automation",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking"
+							],
+							"query": [
+								{
+									"key": "firstname",
+									"value": "Automation"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get booking with invalid paramter value - Negative Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The response body should be a non-empty array\", () => {\r",
+									"  let r = pm.response.json();\r",
+									"  pm.expect(r).to.be.an(\"array\");\r",
+									"  pm.expect(r.length).to.be.greaterThan(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/booking?lastname=Automation",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking"
+							],
+							"query": [
+								{
+									"key": "lastname",
+									"value": "Automation"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create invalid booking (Missing fields) - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 500 for missing requied fields\", () =>{\r",
+									"    pm.response.to.have.status(500);\r",
+									"    pm.expect(pm.response.text()).to.include(\"Internal Server Error\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"First\",\r\n    \"lastname\": \"Last\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/booking",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create invalid booking (Invalid value) - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Total price should accept only numbers\", () => {\r",
+									"    const j = pm.response.json();\r",
+									"    pm.expect(pm.response.code).to.not.equal(200);\r",
+									"    pm.expect(j).to.not.have.property(\"bookingid\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"firstname\": \"API\",\r\n\"lastname\": \"Test\", \r\n\"totalprice\": \"Total price\", \r\n\"depositpaid\": true, \r\n\"bookingdates\": {\r\n    \"checkin\": \"16-07-2017\",\r\n    \"checkout\": \"2017-07-26\"\r\n},\r\n \"additionalneeds\": \"No\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/booking",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create another valid booking - Positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let j = pm.response.json();\r",
+									"pm.environment.set(\"booking_Id\", j.bookingid);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Khaled\",\r\n    \"lastname\": \"Mourad\",\r\n    \"totalprice\": 2500,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2020-08-01\",\r\n        \"checkout\": \"2020-09-01\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast and Dinner\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/booking",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update Booking",
+			"item": [
+				{
+					"name": "Update booking by valid ID with valid token - Positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The response should has the updated firstname\", () => {\r",
+									"    const j = pm.response.json();\r",
+									"    pm.expect(j.firstname).to.eql(\"Test\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The response should include the updated booking check-in\", () => {\r",
+									"    const j = pm.response.json();\r",
+									"    pm.expect(j.bookingdates.checkin).to.eql(\"2025-10-10\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Test\",\r\n    \"lastname\": \"Allen\",\r\n    \"totalprice\": 111,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2025-10-10\",\r\n        \"checkout\": \"2025-11-01\"\r\n    },\r\n    \"additionalneeds\": \"super bowls\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/booking/{{booking_Id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"{{booking_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update booking with missing token - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should return 403 Forbidden for the missing token\", () => {\r",
+									"    pm.response.to.have.status(403);\r",
+									"    pm.expect(pm.response.text()).to.include(\"Forbidden\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Khaled\",\r\n    \"lastname\": \"Mourad\",\r\n    \"totalprice\": 2900,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2020-08-11\",\r\n        \"checkout\": \"2020-09-01\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast and Dinner\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/booking/{{booking_Id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"{{booking_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update booking with missing required field - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should return 400 Forbidden for the missing required checkindate\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Andrew\",\r\n    \"lastname\": \"Revero\",\r\n    \"totalprice\": 2500,\r\n    \"depositpaid\": true,\r\n    \"additionalneeds\": \"Dinner\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/booking/{{booking_Id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"{{booking_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete Booking",
+			"item": [
+				{
+					"name": "Valid Login (Valid Credentials) - Positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token should be returned in the response\", () => {\r",
+									"    let j = pm.response.json();\r",
+									"    pm.expect(j).to.have.property(\"token\");\r",
+									"    pm.environment.set(\"token\", j.token);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create valid booking - Positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let j = pm.response.json();\r",
+									"pm.environment.set(\"booking_Id\", j.bookingid);\r",
+									"\r",
+									"pm.test(\"The response body should contain ID and booking details\", () => {\r",
+									"    const j = pm.response.json();\r",
+									"    pm.expect(j).to.have.property(\"bookingid\");\r",
+									"    pm.expect(j).to.have.property(\"booking\");\r",
+									"    pm.expect(j.booking).to.have.property(\"lastname\", \"Postman\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"firstname\": \"Cypress\",\r\n\"lastname\": \"Postman\", \r\n\"totalprice\": 3700, \r\n\"depositpaid\": true, \r\n\"bookingdates\": {\r\n    \"checkin\": \"2025-08-22\",\r\n    \"checkout\": \"2025-10-20\"\r\n},\r\n \"additionalneeds\": \"Fullboard\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/booking",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a booking with an ID - Positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/booking/{{booking_Id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"{{booking_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a booking with a deleted ID - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should be 405\", () => {\r",
+									"    pm.response.to.have.status(405);\r",
+									"    pm.expect(pm.response.text()).to.include(\"Method Not Allowed\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/booking/{{booking_Id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"{{booking_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a booking with missing token - Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code should return 403 Forbidden for the missing token\", () => {\r",
+									"    pm.response.to.have.status(403);\r",
+									"    pm.expect(pm.response.text()).to.include(\"Forbidden\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/booking/{{booking_Id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"{{booking_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://restful-booker.herokuapp.com",
+			"type": "default"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
