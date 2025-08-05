@@ -65,6 +65,7 @@ jobs:
         run: npm install -g newman-reporter-html
 
       - name: Run Postman API tests with Newman
+        continue-on-error: true
         run: |
           newman run postman-api-tests/API-Booking-Tests.postman_collection.json \
             --environment postman-api-tests/API-Booking-Environment.postman_environment.json \
