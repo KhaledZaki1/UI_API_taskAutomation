@@ -1,4 +1,4 @@
-name: Run Cypress Tests
+name: Run Cypress and Postman Tests
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  cypress-run:
+  test-automation:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +22,7 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      # ---------- CYPRESS UI TESTS ----------
       - name: Start local server
         run: npm run dev &
         env:
@@ -47,7 +48,6 @@ jobs:
           name: visual-diffs
           path: cypress/snapshots_diff_output_
 
-      
       - name: Generate Coverage Report
         run: npx nyc report --reporter=lcov
 
@@ -56,3 +56,20 @@ jobs:
         with:
           name: coverage-report
           path: coverage
+
+      # ---------- POSTMAN API TESTS ----------
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman API tests with Newman
+        run: |
+          newman run postman-api-tests/API-Booking-Tests.postman_collection.json \
+            --environment postman-api-tests/API-Booking-Environment.postman_environment.json \
+            --reporters cli,html \
+            --reporter-html-export postman-api-tests/report.html
+
+      - name: Upload Postman HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-html-report
+          path: postman-api-tests/report.html
