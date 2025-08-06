@@ -2,18 +2,28 @@
 
 **Author:** Khaled Hamdy  
 **Date:** August 2025  
-**Scope:** End-to-end testing for user authentication and admin CRUD functionality  
-**Tools Used:** Cypress + Cucumber, GitHub Actions CI, @cypress/code-coverage
+**Scope:** End-to-end testing for user authentication and CRUD functionality  
+**Tools Used:** **Cypress + Cucumber** and **API tests** using **Postman/Newman**, **@cypress/code-coverage** all integrated into **GitHub Actions** CI/CD.
 
 ---
 
-## 1. 🎯 What is Being Tested
+## 1. 🎯 What is Being Tested for UI and API
 
-- User Registration (Signup)
-- User Login / Logout
-- Admin CRUD operations (Create, Read, Update, Delete)
-- UI field validations and visual integrity
-- Code coverage for frontend logic
+- User Registration (Signup) => UI Testing
+- User Login / Logout => UI Testing
+- Admin CRUD operations (Create, Read, Update, Delete) => UI Testing
+- UI field validations and visual integrity => UI Testing
+- Code coverage for frontend logic 
+- Get list of items (positive) => API Testing
+- Unauthorized access (negative – no token or invalid token) => API Testing
+- Check that the response is in correct format (e.g., array of objects) => API Testing
+- Update existing item with valid data => API Testing
+- Invalid ID or item not found => API Testing
+- Invalid input data => API Testing
+
+
+
+
 
 ---
 
@@ -48,6 +58,7 @@
 | **Cypress**               | E2E testing framework with fast browser control                         |
 | **Cucumber + Cypress**    | BDD syntax (`Given/When/Then`) for readable scenarios                   |
 | **@cypress/code-coverage**| Tracks which frontend code is exercised during tests                    |
+| API   | Postman / Newman          | REST API Testing                                                |
 | **cypress-image-snapshot**| Detects UI regressions visually                                          |
 | **GitHub Actions**        | Runs tests & uploads reports on push and PR                              |
 
